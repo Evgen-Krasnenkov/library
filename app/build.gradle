@@ -1,0 +1,51 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'org.flywaydb.flyway' version '7.15.0'
+}
+
+group 'org.epam'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'mysql:mysql-connector-java:8.0.12'
+    implementation group: 'org.flywaydb', name: 'flyway-core', version: '9.16.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation group: 'org.flywaydb', name: 'flyway-mysql', version: '9.16.1'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+//flyway {
+//    url = 'jdbc:mysql://localhost:3306/library'
+//    user = 'root'
+//    password = 'jnvfrui'
+//    locations = ['classpath:/']
+//}
+//
+//task flywayMigrate(type: FlywayMigrate) {
+//    group = 'flyway'
+//    description = 'Generate SQL script for Flyway migrations'
+//    target = '1' // This ensures that Flyway only generates the SQL script without applying the migrations
+//    cleanOnValidationError = true
+//    ignoreMissingMigrations = true
+//    validateOnMigrate = true
+//}
+
+test {
+    useJUnitPlatform()
+}
