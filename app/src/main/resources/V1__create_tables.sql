@@ -1,60 +1,65 @@
-DROP TABLE IF EXISTS reservation_queue;
-DROP TABLE IF EXISTS loan_history;
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS users;
-CREATE TABLE books (
-                       BookID BIGINT PRIMARY KEY AUTO_INCREMENT,
-                       Title VARCHAR(255) NOT NULL,
-                       Author VARCHAR(255) NOT NULL,
-                       Publisher VARCHAR(255),
-                       ISBN VARCHAR(20),
-                       Publication_Date DATE,
-                       Number_of_Pages INT
+DROP DATABASE library;
+CREATE DATABASE IF NOT EXISTS library;
+USE library;
+
+CREATE TABLE IF NOT EXISTS users (
+                                     userid BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                     name VARCHAR(255) NOT NULL,
+                                     email VARCHAR(255) NOT NULL,
+                                     phone VARCHAR(20) NOT NULL,
+                                     city VARCHAR(100) NOT NULL,
+                                     address VARCHAR(255) NOT NULL,
+                                     PRIMARY KEY (userid)
 );
 
-CREATE TABLE loan_history (
-                              LoanID BIGINT PRIMARY KEY AUTO_INCREMENT,
-                              BookID BIGINT NOT NULL,
-                              UserID BIGINT NOT NULL,
-                              Loan_Date DATE NOT NULL,
-                              Due_Date DATE NOT NULL,
-                              FOREIGN KEY (BookID) REFERENCES books(BookID),
-                              FOREIGN KEY (UserID) REFERENCES users(UserID)
+CREATE TABLE IF NOT EXISTS books (
+                                     BookID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                     Title VARCHAR(255) NOT NULL,
+                                     Author VARCHAR(255) NOT NULL,
+                                     Publisher VARCHAR(255) NOT NULL,
+                                     ISBN VARCHAR(50) NOT NULL,
+                                     Publication_Date DATE NOT NULL,
+                                     Number_of_Pages INT NOT NULL,
+                                     ContributorId BIGINT UNSIGNED NOT NULL,
+                                     CurrentKeeperId BIGINT UNSIGNED,
+                                     PRIMARY KEY (BookID),
+                                     FOREIGN KEY (ContributorId) REFERENCES users (UserID),
+                                     FOREIGN KEY (CurrentKeeperId) REFERENCES users (UserID)
 );
 
-CREATE TABLE reservation_queue (
-                                   ReservationID BIGINT PRIMARY KEY AUTO_INCREMENT,
-                                   BookID BIGINT NOT NULL,
-                                   UserID BIGINT NOT NULL,
-                                   Reservation_Date DATE NOT NULL,
-                                   FOREIGN KEY (BookID) REFERENCES books(BookID),
-                                   FOREIGN KEY (UserID) REFERENCES users(UserID)
+CREATE TABLE IF NOT EXISTS loan_history (
+                                            LoanID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                            BookID BIGINT UNSIGNED NOT NULL,
+                                            UserID BIGINT UNSIGNED NOT NULL,
+                                            Loan_Date DATE NOT NULL,
+                                            Due_Date DATE NOT NULL,
+                                            PRIMARY KEY (LoanID),
+                                            FOREIGN KEY (BookID) REFERENCES books (BookID),
+                                            FOREIGN KEY (UserID) REFERENCES users (UserID)
 );
 
-CREATE TABLE users (
-                       UserID BIGINT PRIMARY KEY AUTO_INCREMENT,
-                       Name VARCHAR(255) NOT NULL,
-                       Email VARCHAR(255) NOT NULL,
-                       Phone VARCHAR(20),
-                       City VARCHAR(255),
-                       Address VARCHAR(255)
+CREATE TABLE IF NOT EXISTS reservation_queue (
+                                                 ReservationID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+                                                 BookID BIGINT UNSIGNED NOT NULL,
+                                                 UserID BIGINT UNSIGNED NOT NULL,
+                                                 Reservation_Date DATE NOT NULL,
+                                                 PRIMARY KEY (ReservationID),
+                                                 FOREIGN KEY (BookID) REFERENCES books (BookID),
+                                                 FOREIGN KEY (UserID) REFERENCES users (UserID)
 );
 
-CREATE TABLE book_genres (
-                             BookID BIGINT NOT NULL,
-                             Genres VARCHAR(255) NOT NULL,
-                             FOREIGN KEY (BookID) REFERENCES books(BookID),
-                             PRIMARY KEY (BookID, Genres)
+
+
+CREATE TABLE IF NOT EXISTS book_genres (
+                                           BookID BIGINT UNSIGNED NOT NULL,
+                                           Genres VARCHAR(50) NOT NULL,
+                                           PRIMARY KEY (BookID, Genres),
+                                           FOREIGN KEY (BookID) REFERENCES books (BookID)
 );
 
-CREATE TABLE book_tags (
-                           BookID BIGINT NOT NULL,
-                           Tags VARCHAR(255) NOT NULL,
-                           FOREIGN KEY (BookID) REFERENCES books(BookID),
-                           PRIMARY KEY (BookID, Tags)
+CREATE TABLE IF NOT EXISTS book_tags (
+                                         BookID BIGINT UNSIGNED NOT NULL,
+                                         Tags VARCHAR(50) NOT NULL,
+                                         PRIMARY KEY (BookID, Tags),
+                                         FOREIGN KEY (BookID) REFERENCES books (BookID)
 );
-
-ALTER TABLE books ADD ContributorId BIGINT;
-ALTER TABLE books ADD CurrentKeeperId BIGINT;
-ALTER TABLE books ADD CONSTRAINT fk_books_contributor FOREIGN KEY (ContributorId) REFERENCES users(UserID);
-ALTER TABLE books ADD CONSTRAINT fk_books_keeper FOREIGN KEY (CurrentKeeperId) REFERENCES users(UserID);

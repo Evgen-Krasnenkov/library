@@ -1,9 +1,9 @@
 package org.epam.dao;
 
-import org.epam.model.Book;
+import org.epam.model.ReservationQueue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookRepository  extends JpaRepository<Book, Long> {
+public interface ReservationQueueRepository extends JpaRepository<ReservationQueue, Long> {
 }
