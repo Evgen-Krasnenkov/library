@@ -1,5 +1,6 @@
 package org.epam.model;
 
+import jakarta.persistence.FetchType;
 import lombok.Data;
 
 import jakarta.persistence.Column;
@@ -19,20 +20,20 @@ public class LoanHistory {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LoanID")
+    @Column(name = "loanid")
     private Long loanId;
 
-    @ManyToOne
-    @JoinColumn(name = "BookID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bookid")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "UserID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userid")
     private User user;
 
-    @Column(name = "Loan_Date")
+    @Column(name = "loan_date")
     private LocalDate loanDate;
 
-    @Column(name = "Due_Date")
+    @Column(name = "due_date")
     private LocalDate dueDate;
 }

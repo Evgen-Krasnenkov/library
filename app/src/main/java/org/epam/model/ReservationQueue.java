@@ -1,5 +1,6 @@
 package org.epam.model;
 
+import jakarta.persistence.FetchType;
 import lombok.Data;
 
 import jakarta.persistence.Column;
@@ -19,17 +20,17 @@ public class ReservationQueue {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ReservationID")
+    @Column(name = "reservationid")
     private Long reservationId;
 
-    @ManyToOne
-    @JoinColumn(name = "BookID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "bookid")
     private Book book;
 
-    @ManyToOne
-    @JoinColumn(name = "UserID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userid")
     private User user;
 
-    @Column(name = "Reservation_Date")
+    @Column(name = "reservation_date")
     private LocalDate reservationDate;
 }
