@@ -9,18 +9,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import lombok.Data;
 import org.hibernate.validator.constraints.ISBN;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "books")
-@Data
 public class Book {
     
     @Id
@@ -28,16 +33,16 @@ public class Book {
     @Column(name = "bookid")
     private Long bookId;
 
-    @Column(name = "Title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "Author")
+    @Column(name = "author")
     private String author;
 
-    @Column(name = "Publisher")
+    @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "ISBN")
+    @Column(name = "isbn")
 //    @ISBN
     private String isbn;
 
@@ -45,25 +50,39 @@ public class Book {
 //    @Past
     private LocalDate publicationDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "book_genres", joinColumns = @JoinColumn(name = "bookid"))
-    @Column(name = "genres")
-    private Set<String> genres;
+    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "books_genres",
+//    joinColumns = @JoinColumn(name = "book_bookid"),
+//    inverseJoinColumns = @JoinColumn(name = "genres_id"))
+    private List<Genre> genres;
 
     @Column(name = "number_of_pages")
     private Integer numPages;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "book_tags", joinColumns = @JoinColumn(name = "bookid"))
     @Column(name = "tags")
-    private Set<String> tags;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Tag> tags;
+
+//    @ManyToOne(fetch = FetchType.EAGER)
+//@JoinColumn(name = "contributor_id")
+//    private User contributor;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "contributor_id")
-    private User contributor;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "current_keeper_id")
     private User currentKeeper;
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", publicationDate=" + publicationDate +
+                ", genres=" + genres +
+                ", numPages=" + numPages +
+                ", currentKeeper=" + currentKeeper +
+                '}';
+    }
 }

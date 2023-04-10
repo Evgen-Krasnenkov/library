@@ -1,6 +1,8 @@
 package org.epam.model;
 
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -49,9 +51,10 @@ public class User{
     @Column(name = "address")
     private String address;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "contributor")
+    @OneToMany(fetch = FetchType.EAGER/*, mappedBy = "contributor_id"*/)
+    @JoinColumn(name = "contributor_id")
     private List<Book> contributedBooks;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "currentKeeper")
-    private List<Book> borrowedBooks;
+//    @OneToMany(fetch = FetchType.EAGER/*, mappedBy = "currentKeeper"*/)
+//    private List<Book> borrowedBooks;
 }
