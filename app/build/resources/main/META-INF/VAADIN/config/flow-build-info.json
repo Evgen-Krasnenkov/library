@@ -1,0 +1,17 @@
+{
+  "productionMode": false,
+  "eagerServerLoad": false,
+  "npmFolder": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app",
+  "node.version": "v18.14.1",
+  "node.download.root": "https://nodejs.org/dist/",
+  "generatedFolder": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\build\\frontend",
+  "frontendFolder": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\frontend",
+  "connect.javaSourceFolder": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\src\\main\\java",
+  "javaResourceFolder": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\src\\main\\resources",
+  "connect.applicationProperties": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\src\\main\\resources\\application.properties",
+  "connect.openApiFile": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\build\\generated-resources\\openapi.json",
+  "project.frontend.generated": "C:\\Users\\Yevgenii_Krasnenkov\\IdeaProjects\\library\\app\\frontend\\generated",
+  "pnpm.enable": false,
+  "require.home.node": false,
+  "build.folder": "build"
+}
