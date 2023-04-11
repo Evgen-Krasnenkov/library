@@ -1,64 +1,63 @@
 package org.epam.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Past;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.ISBN;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Table(name = "books")
 @Data
+@NoArgsConstructor
 public class Book {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BookID")
+    @Column(name = "bookid")
     private Long bookId;
 
-    @Column(name = "Title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "Author")
+    @Column(name = "author")
     private String author;
 
-    @Column(name = "Publisher")
+    @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "ISBN")
+    @Column(name = "isbn")
+    @ISBN
     private String isbn;
 
-    @Column(name = "Publication_Date")
+    @Column(name = "publication_date")
+    @Past
     private LocalDate publicationDate;
 
-    @ElementCollection
-    @CollectionTable(name = "book_genres", joinColumns = @JoinColumn(name = "BookID"))
-    @Column(name = "Genres")
-    private Set<String> genres;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Genre> genres;
 
-    @Column(name = "Number_of_Pages")
+    @Column(name = "number_of_pages")
     private Integer numPages;
 
-    @ElementCollection
-    @CollectionTable(name = "book_tags", joinColumns = @JoinColumn(name = "BookID"))
-    @Column(name = "Tags")
-    private Set<String> tags;
+    @Column(name = "tags")
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Tag> tags;
 
     @ManyToOne
-    @JoinColumn(name = "ContributorId")
-    private User contributor;
-
-    @ManyToOne
-    @JoinColumn(name = "CurrentKeeperId")
     private User currentKeeper;
 
 }
