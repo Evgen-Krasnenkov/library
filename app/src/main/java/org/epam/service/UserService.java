@@ -14,9 +14,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAllUsers(){
-        List<User> all = userRepository.findAll();
-        return all;
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
     public User save(User user){
         return userRepository.save(user);

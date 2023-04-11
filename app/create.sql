@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS library;
-CREATE DATABASE IF NOT EXISTS library;
-USE library;
 create table books (bookid bigint not null auto_increment, author varchar(255), isbn varchar(255), number_of_pages integer, publication_date date, publisher varchar(255), title varchar(255), current_keeper_userid bigint, primary key (bookid)) engine=InnoDB;
 create table books_genres (book_bookid bigint not null, genres_id bigint not null, primary key (book_bookid, genres_id)) engine=InnoDB;
 create table books_tags (book_bookid bigint not null, tags_id bigint not null, primary key (book_bookid, tags_id)) engine=InnoDB;

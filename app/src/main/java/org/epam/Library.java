@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-//@NpmPackage(value = "line-awesome", version = "1.3.0")
+@NpmPackage(value = "line-awesome", version = "1.3.0")
 public class Library extends SpringBootServletInitializer implements AppShellConfigurator {
     public static void main(String[] args) {
         SpringApplication.run(Library.class, args);
