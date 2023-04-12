@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.validator.constraints.ISBN;
 
 import java.time.LocalDate;
@@ -60,4 +62,19 @@ public class Book {
     @ManyToOne
     private User currentKeeper;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        return new EqualsBuilder().append(bookId, book.bookId).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(bookId).toHashCode();
+    }
 }
